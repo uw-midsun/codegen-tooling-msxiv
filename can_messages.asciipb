@@ -10,8 +10,8 @@
 
 msg {
   id: 0
-  source: PLUTUS
-  # target: CHAOS, LIGHTS
+  source: BMS_CARRIER
+  # target: CENTRE_CONSOLE
   msg_name: "bps heartbeat"
   is_critical: true
   can_data {
@@ -23,22 +23,22 @@ msg {
 
 msg {
   id: 1
-  source: CHAOS
-  # target: Driver Controls
-  msg_name: "power distribution fault"
+  source: CENTRE_CONSOLE
+  # target: BMS_CARRIER, SOLAR_MASTER, MOTOR_CONTROLLER_INTERFACE
+  msg_name: "set relay states"
   is_critical: true
   can_data {
     u8 {
-      field_name_1: "reason"
+      field_name_1: "relay_state"
     }
   }
 }
 
 msg {
   id: 2
-  source: CHAOS
-  # target: PLUTUS
-  msg_name: "battery relay main"
+  source: CENTRE_CONSOLE
+  # target: Motor Controller Interface
+  msg_name: "get relay states"
   is_critical: true
   can_data {
     u8 {
@@ -49,73 +49,8 @@ msg {
 
 msg {
   id: 3
-  source: CHAOS
-  # target: PLUTUS
-  msg_name: "battery relay slave"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "relay_state"
-    }
-  }
-}
-
-msg {
-  id: 4
-  source: CHAOS
-  # target: MOTOR_INTERFACE
-  msg_name: "motor relay"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "relay_state"
-    }
-  }
-}
-
-msg {
-  id: 5
-  source: CHAOS
-  # target: SOLAR_MASTER_REAR
-  msg_name: "solar relay rear"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "relay_state"
-    }
-  }
-}
-
-msg {
-  id: 6
-  source: CHAOS
-  # target: SOLAR_MASTER_FRONT
-  msg_name: "solar relay front"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "relay_state"
-    }
-  }
-}
-
-msg {
-  id: 7
-  source: DRIVER_CONTROLS_PEDAL
-  # target: CHAOS
-  msg_name: "power state"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "power_state"
-    }
-  }
-}
-
-msg {
-  id: 8
-  source: CHAOS
-  # target: PLUTUS, MOTOR_CONTROLLER, DRIVER_CONTROLS_PEDAL
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER, PEDAL
   msg_name: "powertrain heartbeat"
   is_critical: true
   can_data {
@@ -124,12 +59,28 @@ msg {
   }
 }
 
+msg {
+  id: 4
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER, PEDAL
+  msg_name: "get aux status"
+  is_critical: true
+  can_data {
+    u8 {
+      field_name_1: "aux_bat_ov_flag"
+      field_name_2: "aux_bat_uv_flag"
+      field_name_2: "aux_bat_ot_flag"
+      field_name_2: "aux_bat_ut_flag"
+    }
+  }
+}
+
 # IDs: 9-15 Reserved
 
 msg {
   id: 16
-  source: CHAOS
-  # target: TELEMETRY
+  source: POWER_DISTRIBUTION_REAR
+  # target: 
   msg_name: "ovuv dcdc aux"
   msg_readable_name: "ov uv dcdc and aux bat"
   can_data {
@@ -158,70 +109,55 @@ msg {
 
 msg {
   id: 18
-  source: DRIVER_CONTROLS_PEDAL
+  source: PEDAL
   # target: MOTOR_INTERFACE
-  msg_name: "drive output"
+  msg_name: "throttle"
   can_data {
     u16 {
       field_name_1: "throttle"
-      field_name_2: "direction"
-      field_name_3: "cruise_control"
-      field_name_4: "mechanical_brake_state"
     }
   }
 }
 
 msg {
   id: 19
-  source: DRIVER_CONTROLS_PEDAL
-  # target: DRIVER_DISPLAY
+  source: STEERING
+  # target: DRIVER_DISPLAY, MOTOR_CONTROLLER
   msg_name: "cruise_target"
   can_data {
     u8 {
-      field_name_1: "target speed"
+      field_name_2: "target speed"
     }
   }
 }
 
 msg {
   id: 20
-  source: CHAOS
-  # target PLUTUS
-  msg_name: "fan_control"
+  source: PEDAL
+  # target: MOTOR_INTERFACE, 
+  msg_name: "brake"
   can_data {
-    u8 {
-      field_name_1: "state"
+    u16 {
+      field_name_1: "brake_state"
     }
   }
 }
 
 msg {
   id: 21
-  source: TELEMETRY
-  # target: PLUTUS
-  msg_name: "set_discharge_bitset"
+  source: CENTRE_CONSOLE
+  # target: MOTOR_INTERFACE
+  msg_name: "front power"
   can_data {
-    u64 {
-      field_name_1: "discharge_bitset"
-    }
-  }
-}
-
-msg {
-  id: 22
-  source: PLUTUS
-  # target: TELEMETRY
-  msg_name: "discharge_state"
-  can_data {
-    u64 {
-      field_name_1: "discharge_bitset"
+    u16 {
+      field_name_1: "power_bitset"
     }
   }
 }
 
 msg {
   id: 23
-  source: LIGHTS_REAR
+  source: POWER_DISTRIBUTION_REAR
   # target: LIGHTS_FRONT
   msg_name: "lights sync"
   can_data {
@@ -232,20 +168,20 @@ msg {
 
 msg {
   id: 24
-  source: DRIVER_CONTROLS_PEDAL
+  source: STEERING
   # target: LIGHTS
-  msg_name: "lights state"
+  msg_name: "lights"
   can_data {
     u8 {
-      field_name_1: "light_id"
-      field_name_2: "light_state"
+      field_name_1: "lights_id"
+      field_name_2: "state"
     }
   }
 }
 
 msg {
   id: 25
-  source: DRIVER_CONTROLS_PEDAL
+  source: STEERING
   # target: LIGHTS
   msg_name: "horn"
   can_data {
@@ -258,9 +194,8 @@ msg {
 msg {
   id: 26
   source: CHARGER
-  # target: CHAOS
-  msg_name: "charger conn state"
-  msg_readable_name: "charger connection state"
+  # target: CENTRE CONSOLE
+  msg_name: "get charger connection state"
   can_data {
     u8 {
       field_name_1: "is_connected"
@@ -270,9 +205,9 @@ msg {
 
 msg {
   id: 27
-  source: CHAOS
+  source: CENTRE_CONSOLE
   # target: CHARGER
-  msg_name: "charger set relay state"
+  msg_name: "set charger relay"
   can_data {
     u8 {
       field_name_1: "state"
@@ -281,66 +216,32 @@ msg {
 }
 
 msg {
-  id: 28
-  source: DRIVER_CONTROLS_STEERING
-  # target: DRIVER_CONTROLS_PEDAL
-  msg_name: "steering event"
-  can_data {
-    u16 {
-      field_name_1: "event_id"
-      field_name_2: "data"
-    }
-  }
-}
-
-msg {
   id: 29
-  source: DRIVER_CONTROLS_CENTER_CONSOLE
-  # target: DRIVER_CONTROLS_PEDAL
-  msg_name: "center console event"
-  # Buttons:
-  #   * low beam
-  #   * daytime running lights
-  #   * hazards
-  #   * power
-  #   * drive
-  #   * neutral
-  #   * reverse
-  # 5V Monitor
+  source: CENTRE_CONSOLE
+  # target: DRIVER_CONTROLS_PEDAL, MOTOR_CONTROLLER
+  msg_name: "drive state"
   can_data {
     u16 {
-      field_name_1: "event_id"
-      field_name_2: "data"
+      field_name_1: "drive_state"
     }
   }
 }
 
 msg {
   id: 30
-  source: DRIVER_CONTROLS_PEDAL
-  # target: MOTOR_INTERFACE
-  msg_name: "motor controller reset"
+  source: CENTRE_CONSOLE
+  msg_name: "hazard"
+  # hazard
   can_data {
     u8 {
-      field_name_1: "motor_controller_index"
-    }
-  }
-}
-
-msg {
-  id: 31
-  source: PLUTUS
-  # target: TELEMETRY
-  msg_name: "battery soc"
-  can_data {
-    empty {
+      field_name_1: "state"
     }
   }
 }
 
 msg {
   id: 32
-  source: PLUTUS
+  source: BMS_CARRIER
   # target: TELEMETRY
   msg_name: "battery vt"
   msg_readable_name: "battery voltage temperature"
@@ -355,7 +256,7 @@ msg {
 
 msg {
   id: 33
-  source: PLUTUS
+  source: BMS_CARRIER
   # target: TELEMETRY
   msg_name: "battery aggregate vc"
   msg_readable_name: "battery aggregate voltage and current"
@@ -452,8 +353,7 @@ msg {
 
 msg {
   id: 43
-  source: CHAOS
-  # target: TELEMETRY
+  source: POWER_DISTRIBUTION_REAR
   msg_name: "aux dcdc vc"
   msg_readable_name: "aux bat and dcdc voltage current"
   can_data {
@@ -468,7 +368,7 @@ msg {
 
 msg {
   id: 44
-  source: CHAOS
+  source: POWER_DISTRIBUTION_REAR
   # target: TELEMETRY
   msg_name: "dcdc temps"
   can_data {
@@ -481,24 +381,9 @@ msg {
 
 msg {
   id: 45
-  source: SOLAR_MASTER_FRONT
+  source: SOLAR
   # target: TELEMETRY
   msg_name: "solar data front"
-  can_data {
-    u16 {
-      field_name_1: "module_id"
-      field_name_2: "voltage"
-      field_name_3: "current"
-      field_name_4: "temperature"
-    }
-  }
-}
-
-msg {
-  id: 46
-  source: SOLAR_MASTER_REAR
-  # target: TELEMETRY
-  msg_name: "solar data rear"
   can_data {
     u16 {
       field_name_1: "module_id"
@@ -527,7 +412,7 @@ msg {
 
 msg {
   id: 51
-  source: SENSOR_BOARD
+  source: IMU
   # target: TELEMETRY
   msg_name: "linear acceleration"
   can_data {
@@ -538,7 +423,7 @@ msg {
 
 msg {
   id: 52
-  source: SENSOR_BOARD
+  source: IMU
   # target: TELEMETRY
   msg_name: "angular rotation"
   can_data {

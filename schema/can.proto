@@ -51,20 +51,16 @@ message CanData {
 message CanMsg {
   enum Source {
     RESERVED = 0;  // enum must contain 0 in protobuf.
-    PLUTUS = 1;
-    PLUTUS_SLAVE = 2;
-    CHAOS = 3;
-    TELEMETRY = 4;
-    LIGHTS_FRONT = 5;
-    LIGHTS_REAR = 6;
-    MOTOR_CONTROLLER = 7;
-    DRIVER_CONTROLS_PEDAL = 8;
-    DRIVER_CONTROLS_CENTER_CONSOLE = 9;
-    SOLAR_MASTER_FRONT = 10;
-    SOLAR_MASTER_REAR = 11;
-    SENSOR_BOARD = 12;
-    CHARGER = 13;
-    DRIVER_CONTROLS_STEERING = 14;
+    BMS_CARRIER = 1;
+    CENTRE_CONSOLE = 2;
+    POWER_DISTRIBUTION_REAR = 3;
+    POWER_DISTRIBUTION_FRONT = 4;
+    MOTOR_CONTROLLER = 5;
+    PEDAL = 6;
+    STEERING = 7;
+    SOLAR = 8;
+    CHARGER = 10;
+    IMU = 11;
   }
 
   uint32 raw_id = 1;  // 0-2047 only
