@@ -37,19 +37,6 @@ msg {
 msg {
   id: 2
   source: CENTRE_CONSOLE
-  # target: Motor Controller Interface
-  msg_name: "get relay states"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "relay_state"
-    }
-  }
-}
-
-msg {
-  id: 3
-  source: CENTRE_CONSOLE
   # target: MOTOR_CONTROLLER, PEDAL
   msg_name: "powertrain heartbeat"
   is_critical: true
@@ -60,17 +47,64 @@ msg {
 }
 
 msg {
-  id: 4
+  id: 3
   source: CENTRE_CONSOLE
   # target: MOTOR_CONTROLLER, PEDAL
   msg_name: "get aux status"
   is_critical: true
   can_data {
-    u8 {
-      field_name_1: "aux_bat_ov_flag"
-      field_name_2: "aux_bat_uv_flag"
-      field_name_2: "aux_bat_ot_flag"
-      field_name_2: "aux_bat_ut_flag"
+    empty {
+    }
+  }
+}
+
+
+msg {
+  id: 4
+  source: CENTRE_CONSOLE
+  # target: REAR_POWER_DISTRIBUTION
+  msg_name: "rear power"
+  is_critical: true
+  can_data {
+    u16 {
+      field_name_1: "output_bitset"
+      field_name_1: "output_state"
+    }
+  }
+}
+
+msg {
+  id: 5
+  source: CENTRE_CONSOLE
+  # target: REAR_POWER_DISTRIBUTION
+  msg_name: "get dc dc status"
+  is_critical: true
+  can_data {
+    empty {
+    }
+  }
+}
+
+msg {
+  id: 6
+  source: CENTRE_CONSOLE
+  # target: REAR_POWER_DISTRIBUTION
+  msg_name: "start precharge"
+  is_critical: true
+  can_data {
+    empty {
+    }
+  }
+}
+
+msg {
+  id: 7
+  source: CENTRE_CONSOLE
+  # target: REAR_POWER_DISTRIBUTION
+  msg_name: "precharge complete"
+  is_critical: true
+  can_data {
+    empty {
     }
   }
 }
@@ -150,7 +184,8 @@ msg {
   msg_name: "front power"
   can_data {
     u16 {
-      field_name_1: "power_bitset"
+      field_name_1: "output_bitset"
+      field_name_1: "output_state"
     }
   }
 }
