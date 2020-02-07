@@ -75,6 +75,58 @@ msg {
   }
 }
 
+msg {
+  id: 5
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER, PEDAL
+  msg_name: "fault sequence"
+  is_critical: true
+  can_data {
+    u16 {
+      field_name_1: "sequence"
+    }
+  }
+}
+
+msg {
+  id: 6
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER, PEDAL
+  msg_name: "power on main sequence"
+  is_critical: true
+  can_data {
+    u16 {
+      field_name_1: "sequence"
+    }
+  }
+}
+
+msg {
+  id: 7
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER, PEDAL
+  msg_name: "power off sequence"
+  is_critical: true
+  can_data {
+    u16 {
+      field_name_1: "sequence"
+    }
+  }
+}
+
+msg {
+  id: 8
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER, PEDAL
+  msg_name: "power on aux sequence"
+  is_critical: true
+  can_data {
+    u16 {
+      field_name_1: "sequence"
+    }
+  }
+}
+
 # IDs: 9-15 Reserved
 
 msg {
