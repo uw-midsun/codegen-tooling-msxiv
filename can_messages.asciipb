@@ -111,10 +111,11 @@ msg {
   id: 18
   source: PEDAL
   # target: MOTOR_INTERFACE
-  msg_name: "throttle"
+  msg_name: "pedal output"
   can_data {
-    u16 {
-      field_name_1: "throttle"
+    u32 {
+      field_name_1: "throttle_output"
+      field_name_2: "brake_output"
     }
   }
 }
