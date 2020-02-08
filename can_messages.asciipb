@@ -131,11 +131,11 @@ msg {
   id: 9
   source: CENTRE_CONSOLE
   # target: 
-  msg_name: "drive state"
+  msg_name: "drive output"
   is_critical: true
   can_data {
     u16 {
-      field_name_1: "drive_state"
+      field_name_1: "drive_output"
     }
   }
 }
