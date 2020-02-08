@@ -127,6 +127,19 @@ msg {
   }
 }
 
+msg {
+  id: 9
+  source: CENTRE_CONSOLE
+  # target: 
+  msg_name: "drive state"
+  is_critical: true
+  can_data {
+    u16 {
+      field_name_1: "drive_state"
+    }
+  }
+}
+
 # IDs: 9-15 Reserved
 
 msg {
@@ -268,17 +281,6 @@ msg {
   }
 }
 
-msg {
-  id: 29
-  source: CENTRE_CONSOLE
-  # target: DRIVER_CONTROLS_PEDAL, MOTOR_CONTROLLER
-  msg_name: "drive state"
-  can_data {
-    u16 {
-      field_name_1: "drive_state"
-    }
-  }
-}
 
 msg {
   id: 30
