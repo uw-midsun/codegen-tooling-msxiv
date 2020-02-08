@@ -222,6 +222,18 @@ msg {
 }
 
 msg {
+  id: 22
+  source: MOTOR_CONTROLLER
+  # target: 
+  msg_name: "drive state"
+  can_data {
+    u16 {
+      field_name_1: "drive_state"
+    }
+  }
+}
+
+msg {
   id: 23
   source: POWER_DISTRIBUTION_REAR
   # target: LIGHTS_FRONT
