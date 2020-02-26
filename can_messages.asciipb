@@ -28,8 +28,9 @@ msg {
   msg_name: "set relay states"
   is_critical: true
   can_data {
-    u8 {
-      field_name_1: "relay_state"
+    u16 {
+      field_name_1: "relay_mask"
+      field_name_2: "relay_state"
     }
   }
 }
@@ -140,7 +141,20 @@ msg {
   }
 }
 
-# IDs: 9-15 Reserved
+msg {
+  id: 10
+  source: CENTRE_CONSOLE
+  # target: 
+  msg_name: "set ebrake state"
+  is_critical: true
+  can_data {
+    u8 {
+      field_name_1: "ebrake_state"
+    }
+  }
+}
+
+# IDs: 12-15 Reserved
 
 msg {
   id: 16
@@ -293,6 +307,27 @@ msg {
   }
 }
 
+msg {
+  id: 28
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER
+  msg_name: "begin precharge"
+  can_data {
+    empty {
+    }
+  }
+}
+
+msg {
+  id: 29
+  source: MOTOR_CONTROLLER
+  # target: CENTRE_CONSOLE
+  msg_name: "precharge completed"
+  can_data {
+    empty {
+    }
+  }
+}
 
 msg {
   id: 30
