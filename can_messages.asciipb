@@ -154,7 +154,7 @@ msg {
   }
 }
 
-# IDs: 9-15 Reserved
+# IDs: 12-15 Reserved
 
 msg {
   id: 16
@@ -307,6 +307,27 @@ msg {
   }
 }
 
+msg {
+  id: 28
+  source: CENTRE_CONSOLE
+  # target: MOTOR_CONTROLLER
+  msg_name: "begin precharge"
+  can_data {
+    empty {
+    }
+  }
+}
+
+msg {
+  id: 29
+  source: MOTOR_CONTROLLER
+  # target: CENTRE_CONSOLE
+  msg_name: "precharge completed"
+  can_data {
+    empty {
+    }
+  }
+}
 
 msg {
   id: 30
