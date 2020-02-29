@@ -342,6 +342,17 @@ msg {
 }
 
 msg {
+  id: 31
+  source: CENTRE_CONSOLE
+  msg_name: "discharge precharge"
+  # target: MOTOR_CONTROLLER
+  can_data {
+    empty {
+    }
+  }
+}
+
+msg {
   id: 32
   source: BMS_CARRIER
   # target: TELEMETRY
