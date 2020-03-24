@@ -36,19 +36,6 @@ msg {
 }
 
 msg {
-  id: 2
-  source: CENTRE_CONSOLE
-  # target: Motor Controller Interface
-  msg_name: "get relay states"
-  is_critical: true
-  can_data {
-    u8 {
-      field_name_1: "relay_state"
-    }
-  }
-}
-
-msg {
   id: 3
   source: CENTRE_CONSOLE
   # target: MOTOR_CONTROLLER, PEDAL
@@ -462,7 +449,19 @@ msg {
   }
 }
 
-# IDs: 41-42 Reserved
+msg {
+  id: 41
+  source: STEERING
+  # target: TELEMETRY
+  msg_name: "cruise control command"
+  can_data {
+    u8 {
+      field_name_1: "command"
+    }
+  }
+}
+
+# IDs: 42 Reserved
 
 msg {
   id: 43
