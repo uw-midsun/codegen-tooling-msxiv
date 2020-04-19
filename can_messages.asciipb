@@ -368,7 +368,19 @@ msg {
   }
 }
 
-# IDs: 34 Reserved
+msg {
+  id: 34
+  source: CENTRE_CONSOLE
+  # target: TELEMETRY
+  msg_name: "state transition fault"
+  msg_readable_name: "motor controller voltage current"
+  can_data {
+    u16 {
+      field_name_1: "state_machine"
+      field_name_2: "fault_reason"
+    }
+  }
+}
 
 msg {
   id: 35
@@ -544,6 +556,18 @@ msg {
   }
 }
 
-# IDs: 53-63 Reserved
+msg {
+  id: 53
+  source: CHARGER
+  # target: TELEMETRY
+  msg_name: "charger fault"
+  can_data {
+    u8 {
+      field_name_1: "fault"
+    }
+  }
+}
+
+# IDs: 54-63 Reserved
 
 # No ID may exceed 63. 
