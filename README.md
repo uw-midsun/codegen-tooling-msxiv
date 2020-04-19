@@ -14,6 +14,12 @@ sudo add-apt-repository ppa:maarten-fonville/protobuf
 sudo apt-get update
 ```
 
+To install the compiler, run:
+```bash
+sudo apt-get install protobuf-compiler
+go get -u github.com/golang/protobuf/protoc-gen-go
+```
+
 If you already have protoc installed continue from here:
 ```bash
 virtualenv .venv
