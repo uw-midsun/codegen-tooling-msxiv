@@ -568,6 +568,32 @@ msg {
   }
 }
 
-# IDs: 54-63 Reserved
+msg {
+  id: 54
+  source: POWER_DISTRIBUTION_FRONT
+  # target: CENTRE_CONSOLE
+  msg_name: "front current measurement"
+  can_data {
+    u16 {
+      field_name_1: "current_id"
+      field_name_2: "current"
+    }
+  }
+}
+
+msg {
+  id: 55
+  source: POWER_DISTRIBUTION_REAR
+  # target: CENTRE_CONSOLE
+  msg_name: "rear current measurement"
+  can_data {
+    u16 {
+      field_name_1: "current_id"
+      field_name_2: "current"
+    }
+  }
+}
+
+# IDs: 56-63 Reserved
 
 # No ID may exceed 63. 
