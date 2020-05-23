@@ -546,4 +546,18 @@ msg {
 
 # IDs: 53-63 Reserved
 
+msg {
+  id: 56
+  source: POWER_SELECTION
+  # target:
+  msg_name: "aux battery status"
+  can_data {
+    u16 {
+      field_name_1: "aux_battery_volt"
+      field_name_2: "aux_battery_temp"
+      field_name_3: "dcdc_status"
+    }
+  }
+}
+
 # No ID may exceed 63. 
