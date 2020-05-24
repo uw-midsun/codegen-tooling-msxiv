@@ -61,6 +61,7 @@ message CanMsg {
     SOLAR = 8;
     CHARGER = 10;
     IMU = 11;
+    POWER_SELECTION = 12;
   }
 
   uint32 raw_id = 1;  // 0-2047 only
