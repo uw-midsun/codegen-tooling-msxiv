@@ -532,7 +532,38 @@ msg {
   }
 }
 
-# IDs: 47-50 Reserved
+msg {
+  id: 48
+  source: CHARGER
+  # target: CENTER_CONSOLE
+  msg_name: "request to charge"
+  can_data {
+    empty {
+    }
+  }
+}
+
+msg {
+  id: 49
+  source: CENTRE_CONSOLE
+  # target: CHARGER
+  msg_name: "allow charging"
+  can_data {
+    empty{
+    }
+  }
+}
+
+msg {
+  id: 50
+  source: CHARGER
+  msg_name: "charger connected state"
+  can_data {
+    u8 {
+      field_name_1: "is_connected"
+    }
+  }
+}
 
 msg {
   id: 51
