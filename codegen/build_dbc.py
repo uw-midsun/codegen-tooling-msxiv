@@ -38,41 +38,7 @@ SIGNED_MESSAGES = [
 ]
 
 # pylint: disable=W0511
-# TODO: Determine a way of encoding this in the ASCIIPB
-ACKABLE_MESSAGES = {
-    0: [
-        'CHAOS',
-        'LIGHTS_FRONT',
-        'PLUTUS_SLAVE',
-        'DRIVER_CONTROLS_PEDAL'
-    ],
-    1: [
-        'DRIVER_CONTROLS_PEDAL'
-    ],
-    2: [
-        'PLUTUS'
-    ],
-    3: [
-        'PLUTUS_SLAVE'
-    ],
-    4: [
-        'MOTOR_CONTROLLER'
-    ],
-    5: [
-        'SOLAR_MASTER_REAR'
-    ],
-    6: [
-        'SOLAR_MASTER_FRONT'
-    ],
-    7: [
-        'CHAOS'
-    ],
-    8: [
-        'PLUTUS',
-        'MOTOR_CONTROLLER',
-        'DRIVER_CONTROLS_PEDAL'
-    ],
-}
+ACKABLE_MESSAGES = set()
 
 def build_arbitration_id(msg_type, source_id, msg_id):
     """
@@ -122,6 +88,9 @@ def main():
 
     for msg_id, can_frame in can_messages.items():
         source = get_key_by_val(device_enum, can_frame.source)
+        # Checks if the message is critical to make sure an ACK is added later
+        if can_frame.is_critical != None and can_frame.is_critical:
+            ACKABLE_MESSAGES.add(str(can_frame.source))
 
         def get_muxed_voltage_signal():
             """
@@ -371,15 +340,10 @@ def main():
             )
             return message
 
-
         # If this requires an ACK, then we go through all of the receivers.
-        # Unfortunately, our ASCIIPB file doesn't have a notion of Receivers,
-        # so we hardcode this for now.
         if msg_id in ACKABLE_MESSAGES:
-            for acker in ACKABLE_MESSAGES[msg_id]:
-                message = get_ack(acker, can_frame.msg_name, msg_id)
-
-                database.messages.append(message)
+            message = get_ack(acker, can_frame.msg_name, msg_id)
+            database.messages.append(message)
 
     # Save as a DBC file
     with open('system_can.dbc', 'w') as file_handle:
