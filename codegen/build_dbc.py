@@ -14,12 +14,6 @@ import cantools
 # For the proto and asciipb parsing
 import data
 
-# The number of battery modules
-NUM_BATTERY_MODULES = 36
-
-# The number of solar slave modules
-NUM_SOLAR_SLAVE_MODULES = 6
-
 # Length of fields (in bits)
 FIELDS_LEN = {
     'u8': 8,
