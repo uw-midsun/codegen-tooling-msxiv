@@ -87,143 +87,6 @@ def main():
         if can_frame.is_signed != None and can_frame.is_signed:
             SIGNED_MESSAGES.append(str(can_frame.msg_name))
 
-        def get_muxed_voltage_signal():
-            """
-            Get the MUXed signals for the Voltage V/T message.
-            """
-            # The MUX'd message is formatted like this:
-            #
-            #  16-bits   16-bits     16-bits
-            # +--------+---------+-------------+
-            # |   id   | voltage | temperature |
-            # +--------+---------+-------------+
-            #
-            # due to CANdlelight 1.0 alignment rules.
-            results = []
-
-            # Generate the signal used as the multiplexer. This is the `id`
-            # field comprising of the first 2 bytes (even though only 7 bits
-            # are necessary), since Voltage and Temperature are both 16-bit
-            # values.
-            multiplexer = cantools.database.can.Signal(
-                name='BATTERY_VT_INDEX',
-                start=0,
-                length=16,
-                is_multiplexer=True
-            )
-            results.append(multiplexer)
-
-            # Generate all the multiplexed signals for the Module Voltage and
-            # Temperatures
-            for i in range(NUM_BATTERY_MODULES):
-                # The voltage is the second signal field
-                voltage = cantools.database.can.Signal(
-                    name='MODULE_VOLTAGE_{0:03d}'.format(i),
-                    start=16,
-                    length=16,
-                    # The multiplexed ID is just the Cell Index
-                    multiplexer_ids=[i],
-                    # The multiplexer is the Module index
-                    multiplexer_signal=results[0],
-                    is_float=False,
-                    decimal=None
-                )
-
-                # The temperature is the third field
-                temperature = cantools.database.can.Signal(
-                    name='MODULE_TEMP_{0:03d}'.format(i),
-                    start=32,
-                    length=16,
-                    byte_order='little_endian',
-                    # The multiplexed ID is just the Cell Index
-                    multiplexer_ids=[i],
-                    # The multiplexer is the Module index
-                    multiplexer_signal=results[0],
-                    is_float=False,
-                    decimal=None
-                )
-
-                results.append(voltage)
-                results.append(temperature)
-
-            return results
-
-        def get_muxed_solar_signal():
-            """
-            Get the MUXed signals for the Solar Sense Data message.
-            """
-            # The MUX'd message is formatted like this:
-            #
-            #  16-bits   16-bits   16-bits     16-bits
-            # +--------+---------+---------+-------------+
-            # |   id   | voltage | current | temperature |
-            # +--------+---------+---------+-------------+
-            #
-            # due to CANdlelight 1.0 alignment rules.
-            results = []
-
-            # Generate the signal used as the multiplexer. This is the `id`
-            # field comprising of the first 2 bytes (even though only 7 bits
-            # are necessary), since Voltage, Current, and Temperature are 16-bit
-            # values.
-            multiplexer = cantools.database.can.Signal(
-                name='SOLAR_SLAVE_INDEX',
-                start=0,
-                length=16,
-                is_multiplexer=True
-            )
-            results.append(multiplexer)
-
-            # Generate all the multiplexed signals for the Module Voltage, Current, and
-            # Temperatures
-            for i in range(NUM_SOLAR_SLAVE_MODULES):
-                # The voltage is the second signal field
-                voltage = cantools.database.can.Signal(
-                    name='MODULE_VOLTAGE_{0:03d}'.format(i),
-                    start=16,
-                    length=16,
-                    # The multiplexed ID is just the Cell Index
-                    multiplexer_ids=[i],
-                    # The multiplexer is the Module index
-                    multiplexer_signal=results[0],
-                    is_float=False,
-                    decimal=None
-                )
-
-                # The current is the third field
-                current = cantools.database.can.Signal(
-                    name='MODULE_CURRENT_{0:03d}'.format(i),
-                    start=32,
-                    length=16,
-                    byte_order='little_endian',
-                    # The multiplexed ID is just the Cell Index
-                    multiplexer_ids=[i],
-                    # The multiplexer is the Module index
-                    multiplexer_signal=results[0],
-                    is_float=False,
-                    decimal=None
-                )
-
-                # The temperature is the fourth field
-                temperature = cantools.database.can.Signal(
-                    name='MODULE_TEMP_{0:03d}'.format(i),
-                    start=48,
-                    length=16,
-                    byte_order='little_endian',
-                    # The multiplexed ID is just the Cell Index
-                    multiplexer_ids=[i],
-                    # The multiplexer is the Module index
-                    multiplexer_signal=results[0],
-                    is_float=False,
-                    decimal=None
-                )
-
-                results.append(voltage)
-                results.append(current)
-                results.append(temperature)
-
-            return results
-
         # All these message types must be Data messages. ACK messages are
         # currently handled implicitly by the protocol layer, and will be
         # generated based on whether or not it is an ACKable message.
@@ -233,58 +96,49 @@ def main():
             msg_id=msg_id
         )
 
-        # We do a special case for BATTERY_VT since this is the only message
-        # that we currently do that uses MUXed data.
-        if can_frame.msg_name == 'BATTERY_VT':
-            signals = get_muxed_voltage_signal()
-            total_length = 48
-        elif can_frame.msg_name in ['SOLAR_DATA_FRONT', 'SOLAR_DATA_REAR']:
-            signals = get_muxed_solar_signal()
-            total_length = 64
-        else:
-            total_length = 0
-            signals = []
-            for index, field in enumerate(can_frame.fields):
-                length = FIELDS_LEN[can_frame.ftype]
+        total_length = 0
+        signals = []
+        for index, field in enumerate(can_frame.fields):
+            length = FIELDS_LEN[can_frame.ftype]
 
-                # Unfortunately, our ASCIIPB doesn't denote whether a field is
-                # signed/unsigned, and it is up to the caller to properly unpack
-                # the CAN signal.
-                #
-                # The only Messages (and Signals) that are signed
-                # (and currently used) are:
-                #
-                # - Drive Output:
-                #   - throttle: int16_t
-                #   - direction: int16_t
-                #   - cruise_control: int16_t
-                #   - mechanical_brake_state: int16_t
-                # - Cruise Target:
-                #   - target speed: int16_t
-                # - Battery Aggregate V/C
-                #   - voltage: uint16_t
-                #   - current: int16_t
-                # - Motor Velocity:
-                #   - vehicle_velocity_left: int16_t
-                #   - vehicle_velocity_right: int16_t
-                if can_frame.msg_name in SIGNED_MESSAGES \
-                    and not field == 'voltage':
-                    signal = cantools.database.can.Signal(
-                        name=field,
-                        start=index*length,
-                        length=length,
-                        is_signed=True
-                    )
-                else:
-                    # battery voltage is unsigned
-                    signal = cantools.database.can.Signal(
-                        name=field,
-                        start=index*length,
-                        length=length,
-                        is_signed=False
-                    )
-                signals.append(signal)
-                total_length += length
+            # Unfortunately, our ASCIIPB doesn't denote whether a field is
+            # signed/unsigned, and it is up to the caller to properly unpack
+            # the CAN signal.
+            #
+            # The only Messages (and Signals) that are signed
+            # (and currently used) are:
+            #
+            # - Drive Output:
+            #   - throttle: int16_t
+            #   - direction: int16_t
+            #   - cruise_control: int16_t
+            #   - mechanical_brake_state: int16_t
+            # - Cruise Target:
+            #   - target speed: int16_t
+            # - Battery Aggregate V/C
+            #   - voltage: uint16_t
+            #   - current: int16_t
+            # - Motor Velocity:
+            #   - vehicle_velocity_left: int16_t
+            #   - vehicle_velocity_right: int16_t
+            if can_frame.msg_name in SIGNED_MESSAGES \
+                and not field == 'voltage':
+                signal = cantools.database.can.Signal(
+                    name=field,
+                    start=index*length,
+                    length=length,
+                    is_signed=True
+                )
+            else:
+                # battery voltage is unsigned
+                signal = cantools.database.can.Signal(
+                    name=field,
+                    start=index*length,
+                    length=length,
+                    is_signed=False
+                )
+            signals.append(signal)
+            total_length += length
 
         # Note: It is safe to divide by 8 since every single message under
         # the old protocol (aka. what I call CANdlelight 1.0) is
