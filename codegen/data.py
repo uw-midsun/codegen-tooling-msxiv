@@ -16,7 +16,7 @@ sys.path.append(
 import can_pb2  # pylint: disable=import-error,wrong-import-position
 
 CanFrame = namedtuple('CanFrame', [
-    'msg_name', 'source', 'ftype', 'fields', 'is_critical', 'dlc'
+    'msg_name', 'source', 'ftype', 'fields', 'is_critical','is_signed', 'dlc'
 ])
 
 
@@ -109,6 +109,7 @@ def parse_can_frames(can_messages_file):
             ftype=oneof,
             fields=fields,
             is_critical=can_message.is_critical,
+            is_signed=can_message.is_signed,
             dlc=int(len(fields) * NUM_DLC_BYTES / max(1, NUM_FIELDS[oneof])))
     return messages
 
