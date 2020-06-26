@@ -29,15 +29,7 @@ FIELDS_LEN = {
 }
 
 # pylint: disable=W0511
-# TODO: Determine a way of encoding this in the ASCIIPB
-SIGNED_MESSAGES = [
-    'DRIVE_OUTPUT',
-    'CRUISE_TARGET',
-    'BATTERY_AGGREGATE_VC',
-    'MOTOR_VELOCITY'
-]
-
-# pylint: disable=W0511
+SIGNED_MESSAGES = []
 ACKABLE_MESSAGES = set()
 
 def build_arbitration_id(msg_type, source_id, msg_id):
@@ -88,9 +80,12 @@ def main():
 
     for msg_id, can_frame in can_messages.items():
         source = get_key_by_val(device_enum, can_frame.source)
-        # Checks if the message is critical to make sure an ACK is added later
+        # Checks for critical messages to make sure an ACK is added later
         if can_frame.is_critical != None and can_frame.is_critical:
             ACKABLE_MESSAGES.add(str(can_frame.source))
+        # Checks for signed messages
+        if can_frame.is_signed != None and can_frame.is_signed:
+            SIGNED_MESSAGES.append(str(can_frame.msg_name))
 
         def get_muxed_voltage_signal():
             """
