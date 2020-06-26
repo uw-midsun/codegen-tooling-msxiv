@@ -3,7 +3,7 @@
 #
 # If you are making changes to this file please update the corresponding entry
 # on the wiki. If you need to add a new message use a reasonable
-# reserved ID. The higher ID the lower the priority. Generally
+# reserved ID. The higher ID the lower the priority. Generally 
 # - 0-13: Critical messages (have ACK)
 # - 14-30: Actionable messages (trigger a change in another system)
 # - 30-63: Data messages (usually not actionable by an onboard device)
@@ -118,7 +118,7 @@ msg {
 msg {
   id: 9
   source: CENTRE_CONSOLE
-  # target:
+  # target: 
   msg_name: "drive output"
   is_critical: true
   can_data {
@@ -131,7 +131,7 @@ msg {
 msg {
   id: 10
   source: CENTRE_CONSOLE
-  # target:
+  # target: 
   msg_name: "set ebrake state"
   is_critical: true
   can_data {
@@ -146,7 +146,7 @@ msg {
 msg {
   id: 16
   source: POWER_DISTRIBUTION_REAR
-  # target:
+  # target: 
   msg_name: "ovuv dcdc aux"
   msg_readable_name: "ov uv dcdc and aux bat"
   can_data {
@@ -201,7 +201,7 @@ msg {
 msg {
   id: 20
   source: PEDAL
-  # target: MOTOR_INTERFACE,
+  # target: MOTOR_INTERFACE, 
   msg_name: "brake"
   can_data {
     u16 {
@@ -225,7 +225,7 @@ msg {
 msg {
   id: 22
   source: MOTOR_CONTROLLER
-  # target:
+  # target: 
   msg_name: "drive state"
   can_data {
     u16 {
@@ -641,4 +641,4 @@ msg {
   }
 }
 
-# No ID may exceed 63.
+# No ID may exceed 63. 
