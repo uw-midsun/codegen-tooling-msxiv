@@ -641,4 +641,32 @@ msg {
   }
 }
 
+msg {
+  id: 57
+  source: BMS_CARRIER
+  # target:
+  msg_name: "battery fan state"
+  can_data {
+    u8 {
+      field_name_1: "fan_1"
+      field_name_2: "fan_2"
+      field_name_3: "fan_3"
+      field_name_4: "fan_4"
+    }
+  }
+}
+
+msg {
+  id: 58
+  source: BMS_CARRIER
+  # target:
+  msg_name: "battery relay state"
+  can_data {
+    u8 {
+      field_name_1: "hv"
+      field_name_2: "gnd"
+    }
+  }
+}
+
 # No ID may exceed 63. 
