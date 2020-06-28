@@ -185,7 +185,7 @@ def main():
 
         # If this requires an ACK, then we go through all of the receivers.
         if msg_id in ACKABLE_MESSAGES:
-            message = get_ack(acker, can_frame.msg_name, msg_id)
+            message = get_ack(can_frame.sender, can_frame.msg_name, msg_id)
             database.messages.append(message)
 
     # Save as a DBC file
