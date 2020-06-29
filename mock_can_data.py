@@ -39,19 +39,13 @@ def get_messages():
 
 def iterate_message_and_signal():
     num_messages_sent = 0
-    if num_messages < 0 :
-        while True:
-            try:
-                send_message()
-                num_messages_sent +=1
-                time.sleep(sleep_time_s)
-            except KeyboardInterrupt:
-                break
-    else:
-        while num_messages_sent < num_messages:
+    while num_messages < 0 or num_messages > num_messages_sent:
+        try:
             send_message()
             num_messages_sent +=1
             time.sleep(sleep_time_s)
+        except KeyboardInterrupt:
+            break
     print("\n" + str(num_messages_sent) + " CAN messages have been sent")
 
 def send_message():
