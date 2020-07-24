@@ -167,3 +167,4 @@ out/
 genfiles/
 
 system_can.dbc
+can_messages.csv
