@@ -39,20 +39,21 @@ def connect():
     client.connect(broker,port,60)
     client.loop_start()
 
-def decode_can_message():
+def decode_and_send():
     message = can_bus.recv()
     decoded = db.decode_message(message.arbitration_id, message.data)
 
+    # Store data locally
     time = str(datetime.fromtimestamp(message.timestamp))
     name = db.get_message_by_frame_id(message.arbitration_id).name
     sender = db.get_message_by_frame_id(message.arbitration_id).senders[0]
-
     write_to_csv(time,name,sender,decoded)
 
+    # Send to FRED with MQTT
     decoded['datetime'] = time
     decoded['name'] = name
     decoded['sender'] = sender
-    return decoded
+    client.publish("uwmidsun/can/test", payload=json.dumps(decoded))
 
 def write_to_csv(time,name,sender,data):
     with open('can_messages.csv', 'a', newline='') as csvfile:
@@ -63,8 +64,7 @@ def write_to_csv(time,name,sender,data):
 def main():
     connect()
     while(True):
-        decoded = decode_can_message()
-        client.publish("uwmidsun/can/test", payload=json.dumps(decoded))
+        decode_and_send()
 
 if __name__ == "__main__":
     main()
