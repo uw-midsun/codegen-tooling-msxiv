@@ -167,3 +167,6 @@ out/
 genfiles/
 
 system_can.dbc
+
+#Local Telemetry Data
+can_messages.csv
