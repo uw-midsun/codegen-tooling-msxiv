@@ -625,8 +625,6 @@ msg {
   }
 }
 
-# IDs: 56-63 Reserved
-
 msg {
   id: 56
   source: POWER_SELECTION
@@ -668,5 +666,20 @@ msg {
     }
   }
 }
+
+msg {
+  id: 60
+  source: SOLAR
+  # target: TELEMETRY, CENTRE_CONSOLE
+  msg_name: "solar fault"
+  can_data {
+    u8 {
+      field_name_1: "fault"
+      field_name_2: "fault_data"
+    }
+  }
+}
+
+# IDs: 61-63 Reserved
 
 # No ID may exceed 63. 
