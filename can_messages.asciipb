@@ -503,20 +503,7 @@ msg {
   }
 }
 
-msg {
-  id: 45
-  source: SOLAR
-  # target: TELEMETRY
-  msg_name: "solar data front"
-  can_data {
-    u16 {
-      field_name_1: "module_id"
-      field_name_2: "voltage"
-      field_name_3: "current"
-      field_name_4: "temperature"
-    }
-  }
-}
+# IDs 45-46: Reserved
 
 msg {
   id: 47
