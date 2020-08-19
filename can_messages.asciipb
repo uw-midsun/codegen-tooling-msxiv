@@ -503,20 +503,7 @@ msg {
   }
 }
 
-msg {
-  id: 45
-  source: SOLAR
-  # target: TELEMETRY
-  msg_name: "solar data front"
-  can_data {
-    u16 {
-      field_name_1: "module_id"
-      field_name_2: "voltage"
-      field_name_3: "current"
-      field_name_4: "temperature"
-    }
-  }
-}
+# IDs 45-46: Reserved
 
 msg {
   id: 47
@@ -625,8 +612,6 @@ msg {
   }
 }
 
-# IDs: 56-63 Reserved
-
 msg {
   id: 56
   source: POWER_SELECTION
@@ -668,5 +653,20 @@ msg {
     }
   }
 }
+
+msg {
+  id: 60
+  source: SOLAR
+  # target: TELEMETRY, CENTRE_CONSOLE
+  msg_name: "solar fault"
+  can_data {
+    u8 {
+      field_name_1: "fault"
+      field_name_2: "fault_data"
+    }
+  }
+}
+
+# IDs: 61-63 Reserved
 
 # No ID may exceed 63. 
