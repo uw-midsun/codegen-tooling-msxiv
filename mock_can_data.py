@@ -1,7 +1,7 @@
 # This script automatically generates and sends CAN messages based off of the DBC file
 # Ensure that you have can and cantools installed, which can be accomplished by running
 # pip install -r requirements.txt
-# Alternatively you could also just run
+# Alternatively, you could also just run
 # pip install can && pip install cantools
 
 # If you are running this script with virtual CAN ensure that it is set up first
