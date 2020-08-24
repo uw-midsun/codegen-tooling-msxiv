@@ -19,6 +19,7 @@ before_install:
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
   - sudo apt-get -qq update
   # hopefully this installs a version of go that supports math/bits
+  - sudo rm -rf /usr/local/go
   - gimme stable
   - gimme -l
   # - sudo apt-get install golang
