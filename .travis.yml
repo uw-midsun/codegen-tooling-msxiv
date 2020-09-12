@@ -19,8 +19,10 @@ before_install:
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
   - sudo apt-get -qq update
   # hopefully this installs a version of go that supports math/bits
-  - sudo apt-get purge golang* 
-  - sudo apt-get autoremove golang-go
+  - sudo rm -rf /usr/local/go
+  - sudo apt-get uninstall purge golang*
+  - sudo apt-get update  
+  #- sudo apt-get autoremove golang-go
   - sudo rm -rf /usr/local/go
 
   - gimme -l
