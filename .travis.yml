@@ -23,6 +23,7 @@ before_install:
   - sudo apt-get autoremove golang-go
   - sudo rm -rf /usr/local/go
 
+  - gimme -l
   - gimme stable
   - gimme -l
   # - sudo apt-get install golang
