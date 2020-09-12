@@ -13,6 +13,10 @@ branches:
   only:
     - master
 
+env: 
+  global: 
+    - TRAVIS_GO_VERSION=1.15.x
+
 before_install:
   # testing possible fix for issue with golang install
   - gimme -l
@@ -30,9 +34,9 @@ before_install:
   #- sudo apt-get autoremove golang-go
   #- sudo rm -rf /usr/local/go
 
-  - gimme -l
-  - gimme stable
-  - gimme -l
+  #- gimme -l
+  #- gimme stable
+  #- gimme -l
   # - sudo apt-get install golang
   # Upgrade Python packaging tools
   - pip install --upgrade pip
