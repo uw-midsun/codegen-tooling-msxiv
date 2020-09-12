@@ -20,7 +20,7 @@ before_install:
   - sudo apt-get -qq update
   # hopefully this installs a version of go that supports math/bits
   - sudo rm -rf /usr/local/go
-  - sudo apt-get uninstall purge golang*
+  - sudo apt-get purge golang*
   - sudo apt-get update  
   #- sudo apt-get autoremove golang-go
   - sudo rm -rf /usr/local/go
