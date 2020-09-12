@@ -13,19 +13,14 @@ branches:
   only:
     - master
 
-#env: 
- # global: 
-  #  - TRAVIS_GO_VERSION=1.15.2
-
 before_install:
-  # testing possible fix for issue with golang install
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 78BD65473CB3BD13
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
   - sudo apt-get -qq update
   - sudo apt-get install golang
+  # install go 1.15.2
   - eval "$(gimme 1.15.2)"
   - gimme -l 
-
   - pip install --upgrade pip
   - pip install --upgrade setuptools
 
