@@ -13,10 +13,6 @@ branches:
   only:
     - master
 
-env: 
-  global: 
-    - TRAVIS_GO_VERSION=1.11.8
-
 before_install:
   # testing possible fix for issue with golang install
   - gimme -l
