@@ -655,6 +655,19 @@ msg {
 }
 
 msg {
+  id: 59
+  source: SOLAR
+  # target: TELEMETRY
+  msg_name: "solar data"
+  can_data {
+    u32 {
+      field_name_1: "data_point_type"
+      field_name_2: "data_value"
+    }
+  }
+}
+
+msg {
   id: 60
   source: SOLAR
   # target: TELEMETRY, CENTRE_CONSOLE
