@@ -669,4 +669,39 @@ msg {
   }
 }
 
+msg {
+  id: 60
+  source: SOLAR
+  # target: TELEMETRY, CENTRE_CONSOLE
+  msg_name: "solar fault"
+  can_data {
+    u8 {
+      field_name_1: "fault"
+      field_name_2: "fault_data"
+    }
+  }
+}
+
+# IDs: 61-62 Reserved
+
+# Common message format for all babydriver messages: see https://uwmidsun.atlassian.net/l/c/XHjUAAK2
+msg {
+  id: 63
+  source: BABYDRIVER
+  # target: BABYDRIVER
+  msg_name: "babydriver"
+  can_data {
+    u8 {
+      field_name_1: "id"
+      field_name_2: "data0"
+      field_name_3: "data1"
+      field_name_4: "data2"
+      field_name_5: "data3"
+      field_name_6: "data4"
+      field_name_7: "data5"
+      field_name_8: "data6"
+    }
+  }
+}
+
 # No ID may exceed 63. 
