@@ -503,20 +503,7 @@ msg {
   }
 }
 
-msg {
-  id: 45
-  source: SOLAR
-  # target: TELEMETRY
-  msg_name: "solar data front"
-  can_data {
-    u16 {
-      field_name_1: "module_id"
-      field_name_2: "voltage"
-      field_name_3: "current"
-      field_name_4: "temperature"
-    }
-  }
-}
+# IDs 45-46: Reserved
 
 msg {
   id: 47
@@ -625,8 +612,6 @@ msg {
   }
 }
 
-# IDs: 56-63 Reserved
-
 msg {
   id: 56
   source: POWER_SELECTION
@@ -665,6 +650,19 @@ msg {
     u8 {
       field_name_1: "hv"
       field_name_2: "gnd"
+    }
+  }
+}
+
+msg {
+  id: 59
+  source: SOLAR
+  # target: TELEMETRY
+  msg_name: "solar data"
+  can_data {
+    u32 {
+      field_name_1: "data_point_type"
+      field_name_2: "data_value"
     }
   }
 }
