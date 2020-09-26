@@ -62,6 +62,8 @@ message CanMsg {
     CHARGER = 10;
     IMU = 11;
     POWER_SELECTION = 12;
+
+    BABYDRIVER = 15;
   }
 
   uint32 raw_id = 1;  // 0-2047 only
