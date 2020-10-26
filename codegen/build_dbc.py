@@ -167,8 +167,9 @@ def main():
         if msg_id in ACKABLE_MESSAGES:
             for acker in ACKABLE_MESSAGES[msg_id]:
                 if(acker!=""):
-                    print(get_key_by_val(device_enum, str(acker)))
-                    #message = get_ack(str(acker), can_frame.msg_name, msg_id)
+                    #print(get_key_by_val(device_enum, str(acker)))
+                    #print(acker)
+                    message = get_ack(str(acker), can_frame.msg_name, msg_id)
                 database.messages.append(message)
 
     # Save as a DBC file

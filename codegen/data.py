@@ -16,7 +16,7 @@ sys.path.append(
 import can_pb2  # pylint: disable=import-error,wrong-import-position
 
 CanFrame = namedtuple('CanFrame', [
-    'msg_name', 'source','target', 'ftype', 'fields', 'is_critical', 'is_signed', 'dlc'
+    'msg_name', 'source', 'target', 'ftype', 'fields', 'is_critical', 'is_signed', 'dlc'
 ])
 
 

@@ -24,7 +24,7 @@ msg {
 msg {
   id: 1
   source: CENTRE_CONSOLE
-  target: "BMS_CARRIER, SOLAR_MASTER, MOTOR_CONTROLLER_INTERFACE"
+  target: "BMS_CARRIER, SOLAR, MOTOR_CONTROLLER"
   msg_name: "set relay states"
   is_critical: true
   can_data {
