@@ -166,7 +166,7 @@ def main():
         # If this requires an ACK, then we go through all of the receivers.
         if msg_id in ACKABLE_MESSAGES:
             for acker in ACKABLE_MESSAGES[msg_id]:
-                if(acker != ""):
+                if acker != "":
                     message = get_ack(str(acker), can_frame.msg_name, msg_id)
                 database.messages.append(message)
 
