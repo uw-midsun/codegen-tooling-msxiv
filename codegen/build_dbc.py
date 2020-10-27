@@ -76,7 +76,7 @@ def main():
         source = get_key_by_val(device_enum, can_frame.source)
         # Checks for critical messages to make sure an ACK is added later
         if can_frame.is_critical != None and can_frame.is_critical:
-            ACKABLE_MESSAGES[msg_id] = ((can_frame.target).replace(" ","")).split(",")
+            ACKABLE_MESSAGES[msg_id] = ((can_frame.target).replace(" ", "")).split(",")
         # Checks for signed messages
         if can_frame.is_signed != None and can_frame.is_signed:
             SIGNED_MESSAGES.append(str(can_frame.msg_name))
@@ -166,7 +166,7 @@ def main():
         # If this requires an ACK, then we go through all of the receivers.
         if msg_id in ACKABLE_MESSAGES:
             for acker in ACKABLE_MESSAGES[msg_id]:
-                if(acker!=""):
+                if(acker != ""):
                     message = get_ack(str(acker), can_frame.msg_name, msg_id)
                 database.messages.append(message)
 
