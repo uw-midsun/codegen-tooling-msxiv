@@ -24,7 +24,7 @@ FIELDS_LEN = {
 
 # pylint: disable=W0511
 SIGNED_MESSAGES = []
-ACKABLE_MESSAGES = set()
+ACKABLE_MESSAGES = {}
 
 def build_arbitration_id(msg_type, source_id, msg_id):
     """
@@ -76,7 +76,7 @@ def main():
         source = get_key_by_val(device_enum, can_frame.source)
         # Checks for critical messages to make sure an ACK is added later
         if can_frame.is_critical != None and can_frame.is_critical:
-            ACKABLE_MESSAGES.add(str(can_frame.source))
+            ACKABLE_MESSAGES[msg_id] = ((can_frame.target).replace(" ", "")).split(",")
         # Checks for signed messages
         if can_frame.is_signed != None and can_frame.is_signed:
             SIGNED_MESSAGES.append(str(can_frame.msg_name))
@@ -95,26 +95,6 @@ def main():
         for index, field in enumerate(can_frame.fields):
             length = FIELDS_LEN[can_frame.ftype]
 
-            # Unfortunately, our ASCIIPB doesn't denote whether a field is
-            # signed/unsigned, and it is up to the caller to properly unpack
-            # the CAN signal.
-            #
-            # The only Messages (and Signals) that are signed
-            # (and currently used) are:
-            #
-            # - Drive Output:
-            #   - throttle: int16_t
-            #   - direction: int16_t
-            #   - cruise_control: int16_t
-            #   - mechanical_brake_state: int16_t
-            # - Cruise Target:
-            #   - target speed: int16_t
-            # - Battery Aggregate V/C
-            #   - voltage: uint16_t
-            #   - current: int16_t
-            # - Motor Velocity:
-            #   - vehicle_velocity_left: int16_t
-            #   - vehicle_velocity_right: int16_t
             if can_frame.msg_name in SIGNED_MESSAGES \
                 and not field == 'voltage':
                 signal = cantools.database.can.Signal(
@@ -185,8 +165,10 @@ def main():
 
         # If this requires an ACK, then we go through all of the receivers.
         if msg_id in ACKABLE_MESSAGES:
-            message = get_ack(can_frame.sender, can_frame.msg_name, msg_id)
-            database.messages.append(message)
+            for acker in ACKABLE_MESSAGES[msg_id]:
+                if acker != "":
+                    message = get_ack(str(acker), can_frame.msg_name, msg_id)
+                database.messages.append(message)
 
     # Save as a DBC file
     with open('system_can.dbc', 'w') as file_handle:

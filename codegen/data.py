@@ -16,7 +16,7 @@ sys.path.append(
 import can_pb2  # pylint: disable=import-error,wrong-import-position
 
 CanFrame = namedtuple('CanFrame', [
-    'msg_name', 'source', 'ftype', 'fields', 'is_critical', 'is_signed', 'dlc'
+    'msg_name', 'source', 'target', 'ftype', 'fields', 'is_critical', 'is_signed', 'dlc'
 ])
 
 
@@ -106,6 +106,7 @@ def parse_can_frames(can_messages_file):
         messages[can_message.id] = CanFrame(
             msg_name=identifier,
             source=device_enum[can_message.source],
+            target=can_message.target,
             ftype=oneof,
             fields=fields,
             is_critical=can_message.is_critical,
