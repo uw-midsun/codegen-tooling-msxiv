@@ -684,7 +684,33 @@ msg {
   }
 }
 
-# IDs: 61-62 Reserved
+msg {
+  id: 61
+  source: POWER_DISTRIBUTION_REAR
+  target: "CENTRE_CONSOLE"
+  msg_name: "rear fan fault"
+  can_data {
+    u16 {
+      field_name_1: "Fault data"
+      field_name_2: "enclosure temp data"
+      field_name_3: "dcdc temp data"
+      field_name_4: "reference voltage"
+    }
+  }
+}
+
+msg {
+  id: 62
+  source: POWER_DISTRIBUTION_FRONT
+  target: "CENTRE_CONSOLE"
+  msg_name: "front fan fault"
+  can_data {
+    u16 {
+      field_name_1: "fault_data"
+    }
+  }
+}
+
 
 # Common message format for all babydriver messages: see https://uwmidsun.atlassian.net/l/c/XHjUAAK2
 msg {
