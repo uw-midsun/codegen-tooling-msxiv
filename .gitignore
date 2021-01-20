@@ -167,3 +167,6 @@ out/
 genfiles/
 
 system_can.dbc
+
+# OS Specific 
+.DS_Store

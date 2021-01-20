@@ -503,7 +503,19 @@ msg {
   }
 }
 
-# IDs 45-46: Reserved
+msg {
+  id: 45
+  source: POWER_DISTRIBUTION_FRONT
+  target: "TELEMETRY"
+  msg_name: "uv cutoff notification"
+  can_data {
+    empty {
+      
+    }
+  }
+}
+
+# IDs 46: Reserved
 
 msg {
   id: 47
@@ -732,4 +744,4 @@ msg {
   }
 }
 
-# No ID may exceed 63.
+# No ID may exceed 64.
