@@ -744,4 +744,4 @@ msg {
   }
 }
 
-# No ID may exceed 64.
+# No ID may exceed 63.
