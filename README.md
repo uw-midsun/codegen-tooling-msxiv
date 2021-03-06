@@ -14,6 +14,13 @@ sudo add-apt-repository ppa:maarten-fonville/protobuf
 sudo apt-get update
 ```
 
+Your default version of golang may be out of date. In this case update via the [update-golang](https://github.com/udhos/update-golang) script, preferably outside the current repository (e.g in your vagrant box shared folder)
+```
+git clone https://github.com/udhos/update-golang
+cd update-golang
+sudo ./update-golang.sh
+```
+
 To install the compiler, run:
 ```bash
 sudo apt-get install protobuf-compiler
