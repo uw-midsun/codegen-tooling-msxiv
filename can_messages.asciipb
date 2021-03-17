@@ -376,7 +376,31 @@ msg {
   }
 }
 
-# IDs: 51-52 Reserved
+msg {
+  id: 51
+  source: SOLAR_6_MPPTS
+  target: "TELEMETRY"
+  msg_name: "solar data 6 mppts"
+  can_data {
+    u32 {
+      field_name_1: "data_point_type"
+      field_name_2: "data_value"
+    }
+  }
+}
+
+msg {
+  id: 52
+  source: SOLAR_6_MPPTS
+  target: "TELEMETRY, CENTRE_CONSOLE"
+  msg_name: "solar fault 6 mppts"
+  can_data {
+    u8 {
+      field_name_1: "fault"
+      field_name_2: "fault_data"
+    }
+  }
+}
 
 msg {
   id: 53
