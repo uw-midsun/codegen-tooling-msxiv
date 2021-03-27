@@ -24,7 +24,7 @@ msg {
 msg {
   id: 1
   source: CENTRE_CONSOLE
-  target: "BMS_CARRIER, SOLAR, MOTOR_CONTROLLER"
+  target: "BMS_CARRIER, SOLAR_5_MPPTS, SOLAR_6_MPPTS, MOTOR_CONTROLLER"
   msg_name: "set relay states"
   is_critical: true
   can_data {
@@ -336,7 +336,7 @@ msg {
   msg_name: "uv cutoff notification"
   can_data {
     empty {
-      
+
     }
   }
 }
@@ -376,7 +376,31 @@ msg {
   }
 }
 
-# IDs: 51-52 Reserved
+msg {
+  id: 51
+  source: SOLAR_6_MPPTS
+  target: "TELEMETRY"
+  msg_name: "solar data 6 mppts"
+  can_data {
+    u32 {
+      field_name_1: "data_point_type"
+      field_name_2: "data_value"
+    }
+  }
+}
+
+msg {
+  id: 52
+  source: SOLAR_6_MPPTS
+  target: "TELEMETRY, CENTRE_CONSOLE"
+  msg_name: "solar fault 6 mppts"
+  can_data {
+    u8 {
+      field_name_1: "fault"
+      field_name_2: "fault_data"
+    }
+  }
+}
 
 msg {
   id: 53
@@ -464,9 +488,9 @@ msg {
 
 msg {
   id: 59
-  source: SOLAR
+  source: SOLAR_5_MPPTS
   target: "TELEMETRY"
-  msg_name: "solar data"
+  msg_name: "solar data 5 mppts"
   can_data {
     u32 {
       field_name_1: "data_point_type"
@@ -477,9 +501,9 @@ msg {
 
 msg {
   id: 60
-  source: SOLAR
+  source: SOLAR_5_MPPTS
   target: "TELEMETRY, CENTRE_CONSOLE"
-  msg_name: "solar fault"
+  msg_name: "solar fault 5 mppts"
   can_data {
     u8 {
       field_name_1: "fault"
