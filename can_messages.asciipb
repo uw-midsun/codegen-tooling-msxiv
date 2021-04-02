@@ -117,19 +117,7 @@ msg {
   }
 }
 
-# IDs: 19-20 Reserved
-
-msg {
-  id: 21
-  source: CENTRE_CONSOLE
-  target: "MOTOR_INTERFACE"
-  msg_name: "front power"
-  can_data {
-    u16 {
-      field_name_1: "power_bitset"
-    }
-  }
-}
+# IDs: 19-21 Reserved
 
 msg {
   id: 22
