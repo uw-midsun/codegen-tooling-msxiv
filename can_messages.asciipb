@@ -185,7 +185,7 @@ msg {
   target: "REGEN_BRAKING"
   msg_name: "regen braking"
   can_data{
-    u8{
+    u8 {
       field_name_1: "state"
     }
   }
