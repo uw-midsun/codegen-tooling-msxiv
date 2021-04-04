@@ -167,7 +167,19 @@ msg {
   }
 }
 
-# IDs: 26-27 Reserved
+msg {
+  id:26
+  source: STEERING
+  target: "REGEN_BRAKING"
+  msg_name: "regen braking"
+  can_data{
+    u8 {
+      field_name_1: "state"
+    }
+  }
+}
+
+# IDs: 27 Reserved
 
 msg {
   id: 28
