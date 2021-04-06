@@ -1,4 +1,10 @@
-# codegen-tooling
+# codegen-tooling \[Deprecated\]
+
+**IMPORTANT: [codegen-tooling-msxiv has been deprecated](https://uwmidsun.atlassian.net/l/c/HUVz1yu7).**
+
+Functionality has been merged into [firmware_xiv](https://github.com/uw-midsun/firmware_xiv). This repository may be out of date. Please see https://uwmidsun.atlassian.net/l/c/HUVz1yu7 for information about the migration.
+
+---
 
 [![Build Status](https://travis-ci.org/uw-midsun/codegen-tooling.svg?branch=master)](https://travis-ci.org/uw-midsun/codegen-tooling)
 
